@@ -1,26 +1,38 @@
 // The Keyword This
 
-// Oh, JavaScript! Why is 'this' so confusing? Well, it is. So let's practice until you're convinced it makes sense. 
+// Oh, JavaScript! Why is 'this' so confusing? Well, it is. So let's practice until
+//   you're convinced it makes sense. 
 
 /* 
 
 1. Create a car with an object literal.
 
-Create an object called car using the object literal notation ({}). Give it a make property, a model property, and a year property. Then give it a method called getAge. This method should take in the current year and return the age of the car as an integer. 
+Create an object called car using the object literal notation ({}). Give it a 
+//  make property, a model property, and a year property. Then give it a method called getAge. 
+//  This method should take in the current year and return the age of the car as an integer. 
 */
 
 // Code here
-var car;
+var car = {
+    make: "Honda",
+    model: "Civic",
+    year: 2016,
+    getAge: function(current) {
+        return current - this.year;
+    }
+}
+
 
 
 /* 
 2. Implicit Binding
 
-Call the getAge method using the car object. Don't forget to pass the year argument. Assign the result to the variable 'carAge' so I can test it.
+Call the getAge method using the car object. Don't forget to pass the year argument. 
+//  Assign the result to the variable 'carAge' so I can test it.
 */
 
 // Code here
-var carAge;
+var carAge = car.getAge();
 
 
 
@@ -29,35 +41,45 @@ var carAge;
 /* 
 3. Create anotherCar object literal
 
-Create another object called anotherCar with the make, model, and year properties. Do not include the getAge method.
+Create another object called anotherCar with the make, model, and year properties. 
+Do not include the getAge method.
 
 */
 
 // Code here
-var anotherCar;
+var anotherCar = {
+    make: "Toyota",
+    model: "FR-S",
+    year: 2016,
+}
 
 
 
 /*
 4. Explicit Binding with Bind
 
-Now bind the getAge method of the first car object to the context of anotherCar. Assign this bound function to the variable getAgeForAnotherCar. 
+Now bind the getAge method of the first car object to the context of anotherCar. 
+//  Assign this bound function to the variable getAgeForAnotherCar. 
 */
 
 // Code here
-var getAgeForAnotherCar;
+var getAgeForAnotherCar = car.getAge.bind(anotherCar)
 
 
 
 /* 
 5. Explicit Binding with Call
 
-Now assign a year property to the window object. Give that property the value 2000. Then call the getAge method of car with the window object as the context. Assign the result of that call to the variable windowAge. 
+Now assign a year property to the window object. Give that property the value 2000. 
+//     Then call the getAge method of car with the window object as the context. 
+//  Assign the result of that call to the variable windowAge. 
 
 */
 
 // Code here
-var windowAge;
+window.year = 2000;
+
+var windowAge = car.getAge.call(window, 2017)
 
 /* 
 
@@ -85,7 +107,7 @@ var customer2 = {
 }
 
 // use apply here
-
+customer1.addToTotal.apply(customer2, [1, 2, 3])
 
 
 /*
@@ -111,7 +133,7 @@ var dog = {
 }
 
 // Code here
-var makeDogSound;
+var makeDogSound = animal.makeSound.bind(dog)
 
 // Use call or apply to invoke the makeSound method with different objects.
 
@@ -135,15 +157,21 @@ var objWithFind = {
 
 /*
 
-Now you can use my method with any object. Create an object and use my findProp method to find the correct value. You'll have to call my method and pass the right context, as well as the value you want to search.
+Now you can use my method with any object. Create an object and use my findProp method to find the correct value.
+//   You'll have to call my method and pass the right context, as well as the value you want to search.
 
 */
 
 // Code here
+var obj = {
+    fire: 'hot'
+}
 
+objWithFind.findProp.call(obj, 'hot')
 
 /*
-Below is another object with a filter method. This method filters returns a new object which contains only the properties with values that match the values in the array you pass to the method. 
+Below is another object with a filter method. This method filters returns a new object which contains 
+only the properties with values that match the values in the array you pass to the method. 
 
 */ 
 
@@ -167,7 +195,8 @@ var objWithFilter = {
 /* 
 9. Prototypes 
 
-Remember that the prototype methods availabe on the Array, String, etc. objects use the this context to perform operations based on the context. Here's an example of a useless prototype method. 
+Remember that the prototype methods availabe on the Array, String, etc. objects use the this context 
+to perform operations based on the context. Here's an example of a useless prototype method. 
 
 */
 Array.prototype.findLength = function() {
@@ -200,7 +229,8 @@ Call the Array.prototype.filter method and pass it a new array as context and a 
 
 
 /*
-Apply the String.prototype.replace method and pass it a new string as context and an array which contains a value to search and a value to replace it with.
+Apply the String.prototype.replace method and pass it a new string as context and an array which 
+contains a value to search and a value to replace it with.
 */
 
 // Code here
@@ -216,6 +246,12 @@ Create a constructor function for Person. Take in the name, age, and weight of a
 */
 
 // Code here
+
+function Person (name, age, weight) {
+    this.name = name;
+    this.age = age;
+    this.weight = weight
+}
 /* 
 11. Prototype Creation
 
@@ -224,17 +260,21 @@ Now give your Person object a prototype method called addWeight. Take in the add
 */
 
 // Code here
-
+Person.prototype.addWeight = function(addedWeight) {
+    this.weight += addedWeight
+}
 
 /*
 12. Create Persons
 
-Create two persons, brian and briansClone, based on your Person object. Call the changeWeight method for each. Console.log the weight of each person to see if the weight has changed.
+Create two persons, brian and briansClone, based on your Person object. Call the changeWeight method for each.
+ Console.log the weight of each person to see if the weight has changed.
 
 */ 
 
 // Code here
-var brian;
-var briansClone;
+var brian = new Person('brian', '20', 150)
+var briansClone = new Person('brian', '20', 150)
 
-
+brian.addWeight.call(brian, 10)
+console.log(brian)
